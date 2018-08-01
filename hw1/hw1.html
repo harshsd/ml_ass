@@ -1,0 +1,181 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+        <title>CS419M (Autumn 2018) Assignment 1</title>
+        <!--<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500" />-->
+     <!--<style>
+         body {
+         font-family: 'Roboto', serif;
+         }
+        </style>-->
+        <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });
+        </script>
+
+        <script type="text/javascript">
+            function showpanel(e){
+                f = e;
+                var div;
+                for(div = e.nextSibling; div.className != "panel"; div = div.nextSibling);
+
+                if(div.style.display=="block"){
+                    div.style.display="";
+                } else {
+                    div.style.display="block";
+                }
+                return true;
+            }
+        </script>
+            <style type="text/css">
+        #main {
+            margin:0 auto;
+            max-width:60em;
+            line-height:1.5;
+            padding:4em 1em;
+        text-align:justify;
+         }
+        .panel {
+            background-color: #ebebeb;
+            max-width:50em;
+            margin:8px auto;
+            padding:8px 3px;
+            display: none;
+        }
+    .report {
+            font-weight: bold;
+        color: blue;
+        background-color: mintcream;
+    }
+    .modelfiles {
+            font-weight: bold;
+        font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+        color: brown;
+        background-color: mintcream;
+    }
+        .xpanel {
+        border-width: 2px; border-style: solid;
+            margin:8px auto;
+            padding:8px 3px;
+        font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+        }
+        .title {
+            font-weight: bold;
+        }
+        .blocktitle {
+            background-color: lightsteelblue;
+            font-weight: bold;
+        font-family: verdana, arial;
+        }
+    .codeblock {
+        font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+    }
+    .note {
+        background-color: yellow;
+        color: black;
+            font-weight: bold;
+    }
+        a.paperlink {
+            text-decoration: underline;
+        }
+        p.shellcmds {font-family:Courier New; font-size:16px; text-indent:3em;}
+        .shellcmds {font-family:Courier New; font-size:16px; text-indent:3em;}
+        .shellcmdsmall {font-family:Courier New; font-size:14px; text-indent:3em;}
+        .shellcmdcheat {font-family:Courier New; font-size:14px; text-indent:6em;}
+        .shellcmdin {font-family:Courier New;}
+        .colored {color: blue;}
+
+        p.note {background-color: #FFFED3; margin-left:30px; margin-right:30px; padding-left:20px; padding-right:20px; padding-top:20px; padding-bottom:20px;font-size:16px;}
+
+        .tasks {border-style: solid; border-width:thick; border-color: #BBDDFF; margin-left:20px; margin-right:20px; padding-left:10px; padding-right:10px; padding-top:20px; padding-bottom:20px;font-size:16px;}
+
+    </style>
+    </head>
+
+    <!--<body style="margin:0 auto; max-width:50em; line-height:1.5; padding: 4em 1em;">-->
+    <body>
+    <div id="main">
+        <h1>CS419M (Autumn 2018): Assignment 1</h1>
+        <!--<h3> Last updated on <span class="note">16th February at 8 am.</span> "THRESH1 is a threshold on the minimum number of instances that can be classified at a leaf node."</h3> -->
+        <!--<h3> Last updated on <span class="note">16th February at 8 am.</span> "Hint added for the VC dimension problem."</h3>-->
+          <p> This assignment is due by <span class="note">14/08/2018</span>. The submission portal on Moodle will close at <span class="note">11:55 PM</span>.  There will be a 10% reduction in marks for each day in case of late submission.<br /></p> 
+        <p><b>Please read the following important instructions before getting started on the assignment.</b>
+        
+        <ol>
+            <li> This assignment should be completed individually or in a group of 2. </li>
+            
+            <li> The programming assignment is hosted as a Kaggle competition. Click <a href="javascript:void(0)" onclick="showpanel(this)" class="paperlink"> here</a> for further instructions on how to access Kaggle. 
+            <div class="panel">
+                <ol>
+                    <li>If you don't have a Kaggle login already. Go to the <a href="https://www.kaggle.com/">Kaggle</a> website. </li>
+                    <li> Create a new login using your roll number/GPO ID. Your assignment <b>will not be graded</b> if IITB roll number is not used as username.</li>
+                    <li>Details of Kaggle competitions are available <a href="https://www.kaggle.com/c/cs419m">here</a> and <a href="https://www.kaggle.com/c/cs419m-assgmt1-data1">here</a>.</li>
+                </ol>
+            </div>
+            
+            <li>Your final submission should be a .tgz bundle of a directory organized exactly as described <a href="javascript:void(0)" onclick="showpanel(this)" class="paperlink">here</a>. 
+            <div class="panel">
+            The directory should be submitted as a .tgz file using the command:<br /> <span class="codeblock">tar -czf submission_roll_number.tgz submission_roll_number</span> 
+                 <pre>
+submission_roll_number/             (example: submission_150123456)
+    +--report.pdf                   (contains plots/numbers)
+    +--dataset_toy/
+    |   |   +-train.py/train.cpp   (one of train.py or train.cpp depending on whether your code
+    |   |                           is in Python or C++, respectively.)
+    |   |   +-infer.py/infer.cpp
+    |   |   +-output.csv
+    |   |   +-model                (use any format to save your model)
+    +--dataset_kaggle1/ 
+    |   |   +-train.py/train.cpp
+    |   |   +-infer.py/infer.cpp
+    |   |   +-output.csv
+    |   |   +-model
+    +--dataset_kaggle2/ 
+    |   |   +-train.py/train.cpp
+    |   |   +-infer.py/infer.cpp
+    |   |   +-output.csv
+    |   |   +-model
+                 </pre>
+                Python 3.4 or above should be used. For C++, compile using <span class="codeblock">g++ --std=c++11</span>. The complied file in C++ should be with same name and <span class="codeblock">.o</span> extension.</div>
+             
+            <li>The file <span class="codeblock">train.py/train.cpp</span> should create a decision tree model which should be saved in place of <span class="codeblock">model</span> in the above mentioned directory structure. This saved model should be loaded by <span class="codeblock">infer.py/infer.cpp</span>. The file <span class="codeblock">infer.py/infer.cpp</span> should write the output to <span class="codeblock">output.csv</span> as mentioned on Kaggle submission page.    
+    
+        </ol>
+
+    <h2><u>Programming</u></h2>
+
+    <h3><u>Implementing a Regression Tree</u></h3>
+
+    <p> In this assignment, you will be implementing a regression tree from scratch. Each decision node will correspond to one of the 
+    features in <span class="codeblock">train.csv</span>, which is selected by choosing the feature that minimises loss. For this 
+    assignment, you will be experimenting with two loss functions viz. mean squared loss and absolute loss. The files <span class="codeblock">train.py/train.cpp</span> and <span class="codeblock">infer.py/infer.cpp</span> should accept the command line argument <span class="codeblock">data_file</span>. Your code should also accept two command line arguments <span class="codeblock">mean_squared</span> and <span class="codeblock">absolute</span> as (example for python) <span class="codeblock">python infer.py --data_file data.csv --absolute</span>. The features in <span class="codeblock">train.csv</span> and <span class="codeblock">test.csv</span> are either continuous-valued or 
+    discrete-valued. Details about data attributes are given on Kaggle competition page.<br>
+
+    <p> The task for this problem is hosted on Kaggle. Please go to <a href="https://www.kaggle.com/c/cs419m">competition1</a> and <a href="https://www.kaggle.com/c/cs419m-assgmt1-data1">competition2</a>, after you have created an account on Kaggle using your roll number and GPO ID. Competition1 is public. Please use this <a href="https://www.kaggle.com/t/6d73ea0da9044bb0a58c3dd47d423152">link</a> to participate in competition2. You can download <a href="toy_dataset.csv">this</a> small toy dataset to save time on computation during intial experimentation.</p> 
+
+    <!-- <h3><u>Part 1 (20 points)</u></h3> -->
+    <ol type="A">
+        <li> Use either Python or C++ code to implement your Regression Tree. It should accept argument <span class="codeblock">data_file</span> which is used to pass the data in CSV format as given on Kaggle competition webpage. Inference should be implemented using <span class="codeblock">infer.py/infer.cpp</span> and output should be stored in <span class="codeblock">output.csv</span> as already mentioned above. <span class="report">Report this best loss values to <span class="codeblock">report.pdf</span></span>.</li>
+        <!-- <li> Let <span class="codeblock">depth</span> be set to -1 i.e. there is no restriction on max depth. Instead, impose a threshold on the minimum number of instances that can be classified at a leaf node. Call this <span class="codeblock">THRESH1</span>. This can be a constant that is defined at the beginning of <span class="codeblock">dt.py/dt.cc</span>. Create and submit a plot where the X-axis shows different values of <span class="codeblock">THRESH1</span> and the Y-axis is the classification accuracy on the test set, <span class="codeblock">test.csv</span>. (Use at least five different values of X to create this plot.) <span class="report">Add this to <span class="codeblock">submission/programming/part1/report.pdf</span></span>. (<span class="report">Also, describe within <span class="codeblock">submission/programming/part1/README</span> how to enable this stopping criterion.</span>) &nbsp; &nbsp; <b>[6 points]</b></li>   -->
+        <li>Build a complete regression tree using your training samples in <span class="codeblock">train.csv</span>. Prune the decision tree as discussed in the class. You can use 1-fold cross validation. Plot the graph between <span class="codeblock" >loss</span> and <span class="codeblock" >number of nodes</span> in the regression tree. Note that you will have two graphs, one for absolute loss and one for squared loss. <span class="report">Report this graph to <span class="codeblock">submission/report.pdf</span></span></li>
+        <!-- <li> Grow a complete decision tree using your training samples in <span class="codeblock">train.csv</span>. That is, <span class="codeblock">depth = -1</span> and no other stopping criterion is employed. What is the resulting loss on <span class="codeblock">test.csv</span>? <span class="report">Add this to <span class="codeblock">submission/programming/part1/report.pdf</span></span>. &nbsp; &nbsp; <b>[ points]</b></li> -->
+        <li>Predict the output on second dataset given <a href="https://www.kaggle.com/c/cs419m-assgmt1-data1/data">here</a> and modify the model to optimize for this bigger dataset. <span class="report">Report the best loss value to <span class="codeblock">report.pdf</span></span></li>
+        
+        <li>Training time and inference time should also be mentioned in report. Report should also contain a brief note on implementation and any extra experiments or modifications you wish to emphasize.</li>
+
+    </ol>
+
+    <!-- <h3><u>Extra credit (5 points)</u></h3>
+        <p> For this part, your task at hand is to optimize your decision tree classifier further using any technique that you deem appropriate. The book chapter on "Decision trees" (shared via Moodle) discusses some techniques to avoid overfitting which might be useful. For this part, submit new code <span class="codeblock">dt_adv.py</span> or <span class="codeblock">dt_adv.cc</span></span> that trains a decision tree classifier. <span class="report">Please describe your innovations within the file, <span class="codeblock">submission/programming/extra/README</span> and also describe how we should run your code.
+        </p>
+         -->
+    </div>
+    </body>
+</html>
